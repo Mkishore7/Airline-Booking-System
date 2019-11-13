@@ -88,7 +88,7 @@ if(isset($_POST['register']))
             $_SESSION['success'] = "You are now logged in.";
 
             //Heading to HOMEPAGE
-            header('location: homepage.php');
+            header('location: index.php');
           }
         }
       else{
@@ -139,7 +139,7 @@ if(isset($_POST['login']))
       //log user in
       $_SESSION['username']=$username;
       $_SESSION['success'] = "You are now logged in.";
-      header('location: homepage.php');
+      header('location: index.php');
     }
     else
     {
