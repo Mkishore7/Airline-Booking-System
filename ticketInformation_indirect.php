@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once('server.php');
 require_once('errors.php');
 
@@ -7,7 +6,14 @@ if(empty($_SESSION['username'])) {
 	array_push($errors, "Please Login First.");
   header('location: login.php');
 }
+include('templates/header.php');
 
+?>
+
+<body>
+	<?php include('templates/navbar.php'); ?>
+
+<?php
 $_SESSION["No_of_Seats_indirect"] = $_POST["No_of_Seats"];
 $_SESSION["Price_indirect"] = $_POST["Price"];
 $_SESSION["Duration_indirect"] = $_POST["Duration"];
@@ -34,3 +40,5 @@ for($x=1;$x<=$_SESSION["No_of_Seats_indirect"];$x++)
 }
 echo '<input type="submit" value="submit" name="submit">'.'</form>';
 ?>
+
+<?php include('templates/footer.php'); ?>

@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once('server.php');
 require_once('errors.php');
 
@@ -7,7 +6,14 @@ if(empty($_SESSION['username'])) {
 	array_push($errors, "Please Login First.");
   header('location: login.php');
 }
+include('templates/header.php');
+?>
 
+<body>
+	<?php include('templates/navbar.php'); ?>
+
+
+<?php
 //var_dump($_SESSION);
 $No_of_seats = $_POST["No_of_Seats"];
 $DepartureTime = $_POST["DepartureTime"];
@@ -18,7 +24,7 @@ $Flight_no = $_POST["Flight_no"];
 $Class = $_POST["Class"];
 echo "<h1>Enter details of Passengers</h1>";
 echo "<br><br>";
-echo '<form action="/payment.php" method = "post">';
+echo '<form action="payment.php" method = "post">';
 for($x=1;$x<=$No_of_seats;$x++)
 {
 	echo "Enter details for passenger ".$x."<br>";
@@ -36,3 +42,5 @@ echo '<input type="hidden" name="Price" value= '.$Price.' > ';
 echo '<input type="hidden" name="Class" value= '.$Class.' > ';
 echo '<input type="submit" value="submit" name="submit">'.'</form>';
 ?>
+
+<?php include('templates/footer.php'); ?>

@@ -1,5 +1,13 @@
 <?php
-session_start();
+require_once('server.php');
+require_once('errors.php');
+
+if(empty($_SESSION['username'])) {
+	array_push($errors, "Please Login First.");
+  header('location: login.php');
+}
+include('templates/header.php');
+
 if(isset($_POST["pay"]))
 {
 	$connection = new mysqli("localhost","root","","airlineresvervationsystem");
@@ -60,6 +68,7 @@ if(isset($_POST["pay"]))
 </head>
 <body>
 <?php
+include('templates/navbar.php');
 $No_of_seats = $_POST["No_of_Seats"];
 $_SESSION['No_of_Seats']=$No_of_seats;
 $DepartureTime = $_POST["DepartureTime"];
@@ -96,5 +105,4 @@ echo '<form action="payment.php" method = "post">';
 echo 'Account No : <input type="text" name="Account_No" required><br>';
 echo '<input type="Submit" name="pay" value = "PAY!!">';
 ?>
-</body>
-</html>
+<?php include('templates/footer.php'); ?>

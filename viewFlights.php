@@ -67,7 +67,7 @@ while($row = $result->fetch_assoc())
               echo "<td>" .$interval->format('%h')." Hours ".$interval->format('%i')." Minutes". "</td>";
               echo "<td>". $price."</td>";
               echo "<td>";
-              echo '<form action="\ticketInformation.php" method="post">';
+              echo '<form action="ticketInformation.php" method="post">';
               echo '<input type="hidden" name="DepartureTime" value= '.$row["DepartureTime"].' > ';
               echo '<input type="hidden" name="ArrivalTime" value= '.$row["ArrivalTime"].' > ';
               $x = $row["Flight_no"];
