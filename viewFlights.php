@@ -1,6 +1,10 @@
 <?php
 session_start();
 require_once('templates/header.php');
+?>
+<body>
+
+<?php
 include('templates/navbar.php');
 
 $Airport_Id_Src = $_POST['Source'];
@@ -22,7 +26,7 @@ $sql = "SELECT Flight_no,DepartureTime,ArrivalTime FROM Passes where Airport_ID_
 
 $col = $Class.'Price';
 
-if($Via=='DIRECT')
+if($Via=='nonstop')
 {
 echo "<table style='float : left' border='4' cellspacing='0' >
 <tr>
@@ -162,5 +166,8 @@ echo "</table>";
 $result->free();
 }
 $connection->close();
+?>
+</body>
+<?php
 require_once('templates/footer.php');
 ?>

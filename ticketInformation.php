@@ -1,5 +1,12 @@
 <?php
 session_start();
+require_once('server.php');
+require_once('errors.php');
+
+if(empty($_SESSION['username'])) {
+	array_push($errors, "Please Login First.");
+  header('location: login.php');
+}
 
 //var_dump($_SESSION);
 $No_of_seats = $_POST["No_of_Seats"];
