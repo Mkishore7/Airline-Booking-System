@@ -39,7 +39,7 @@
    </div>
    <hr />
    <div id="oneway">
-     <form role="form" action="SearchResultOneway.php" method="post">
+     <form role="form" action="viewFlights.php" method="post">
        <div class="row">
          <div class="col-sm-6">
            <label for="from">From:</label>

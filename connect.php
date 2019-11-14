@@ -1,7 +1,7 @@
 <?php
 date_default_timezone_set('Asia/Calcutta');
 $host = 'localhost';
-$db   = 'guesthouse';
+$db   = 'airlineresvervationsystem';
 $user = 'root';
 $pass = '';
 $charset = 'utf8mb4';
