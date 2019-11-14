@@ -1,5 +1,13 @@
 <?php
 session_start();
+require_once('server.php');
+require_once('errors.php');
+
+if(empty($_SESSION['username'])) {
+	array_push($errors, "Please Login First.");
+  header('location: login.php');
+}
+
 $_SESSION["No_of_Seats_indirect"] = $_POST["No_of_Seats"];
 $_SESSION["Price_indirect"] = $_POST["Price"];
 $_SESSION["Duration_indirect"] = $_POST["Duration"];

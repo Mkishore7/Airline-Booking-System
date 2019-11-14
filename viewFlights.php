@@ -1,5 +1,7 @@
 <?php
 session_start();
+require_once('templates/header.php');
+include('templates/navbar.php');
 
 $Airport_Id_Src = $_POST['Source'];
 $Airport_Id_Dst = $_POST['Destination'];
@@ -160,4 +162,5 @@ echo "</table>";
 $result->free();
 }
 $connection->close();
+require_once('templates/footer.php');
 ?>

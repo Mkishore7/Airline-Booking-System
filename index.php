@@ -66,7 +66,8 @@
            <label for="Class">Class:</label>
            <select class="form-control" name="Class">
              <option value="Economy">Economy</option>
-             <option value="Business">Business</option>              <option value="First Class">First Class</option>
+             <option value="Business">Business</option>
+             <option value="First Class">First Class</option>
            </select>
          </div>
        </div>
@@ -96,23 +97,23 @@
      <form role="form" action="SearchResultRoundtrip.php" method="post">
        <div class="row">
          <div class="col-sm-6">
-           <label for="from">From:</label>
-           <input type="text" class="form-control" id="from" name="from" placeholder="Code " required>
+           <label for="Source">From:</label>
+           <input type="text" class="form-control" id="Source" name="Source" placeholder="Code " required>
          </div>
          <div class="col-sm-6">
-           <label for="to">To:</label>
-           <input type="text" class="form-control" id="to" name="to" placeholder="Code" required>
+           <label for="Destination">To:</label>
+           <input type="text" class="form-control" id="Destination" name="Destination" placeholder="Code" required>
          </div>
        </div>
        <hr >
        <div class="row">
          <div class="col-sm-6">
-           <label for="depart">Depart:</label>
-           <input type="date" class="form-control" id="depart" name="depart" required>
+           <label for="Date">Depart:</label>
+           <input type="date" class="form-control" id="Date" name="Date" required>
          </div>
          <div class="col-sm-6">
-           <label for="return">Return:</label>
-           <input type="date" class="form-control" id="return" name="return" required>
+           <label for="returnDate">Return:</label>
+           <input type="date" class="form-control" id="returnDate" name="returnDate" required>
          </div>
        </div>
        <hr >
@@ -145,8 +146,8 @@
      <form role="form" action="SearchResultAll.php" method="post">
        <div class="row">
          <div class="col-sm-6">
-           <label for="selectdate">Select a date:</label>
-           <input type="date" class="form-control" id="selectdate" name="selectdate" required>
+           <label for="Date">Select a date:</label>
+           <input type="date" class="form-control" id="Date" name="Date" required>
          </div>
        </div>
        <br>
