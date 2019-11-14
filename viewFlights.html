@@ -5,10 +5,18 @@
 </head>
 <body>
 	<h1>VIEW ALL FLIGHTS</h1>
-<form action="\viewFlights.php" method="post">
+<form action="\airlinereservationsystem\viewFlights.php" method="post">
 	Airport_ID_Src: <input type="text" name="Source"><br>
 	Airport_ID_Dst: <input type="text" name="Destination"><br>
 	Date:           <input type="text" name="Date"><br>
+	Class :         <select name="Class">
+    <option value="Economy">Economy</option>
+    <option value="Buisness">Buisness</option>
+    <option value="First Class">First Class</option>
+    </select><br>
+    No of Seats : <input type="number" name="no_of_seats" min="1"><br>
+    <input type="radio" name="Via" value="DIRECT"> DIRECT<br>
+    <input type="radio" name="Via" value="ONE STOP"> ONE STOP<br>
 	<input type="submit" value="Submit">
 </form> 
 </body>

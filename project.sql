@@ -1,7 +1,7 @@
 -- Table Creation Queries
-CREATE TABLE Passengers
+CREATE TABLE Users
 (
-  Passenger_ID VARCHAR(20) NOT NULL,
+  User_ID VARCHAR(20) NOT NULL,
   First_Name VARCHAR(20) NOT NULL,
   Last_Name VARCHAR(20) NOT NULL,
   DOB DATE NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE Passengers
   Email VARCHAR(20) NOT NULL,
   Phone_No VARCHAR(20) NOT NULL,
   Password VARCHAR(20) NOT NULL,
-  PRIMARY KEY (Passenger_ID,Password)
+  PRIMARY KEY (User_ID)
 );
 
 CREATE TABLE Airport
@@ -25,6 +25,7 @@ CREATE TABLE Airlines
 (
   Name VARCHAR(20) NOT NULL,
   Airline_ID VARCHAR(20) NOT NULL,
+  Account_No VARCHAR(20) NOT NULL,
   PRIMARY KEY (Airline_ID)
 );
 
@@ -55,44 +56,41 @@ CREATE TABLE Passes
   FOREIGN KEY (Flight_no) REFERENCES Flights(Flight_no)
 );
 
-
-
-
-
 CREATE TABLE Ticket
 (
-  Booking_Status INT NOT NULL,
-  Cancellation_Status INT NOT NULL,
+  Booking_Status INT ,
+  Cancellation_Status INT ,
   RefundStatus INT ,
-  CancellationTime time ,
-  Ticket_ID VARCHAR(20) NOT NULL,
-  Passenger_ID VARCHAR(20) NOT NULL,
-  Flight_No VARCHAR(20) NOT NULL,
-  Class INT NOT NULL,
-  BookingTime timestamp NOT NULL,
-  Src VARCHAR(20) NOT NULL,
-  Dst VARCHAR(20) NOT NULL,
-  Flight_no VARCHAR(20) NOT NULL,
-  Passenger_ID VARCHAR(20) NOT NULL,
-  Airline_ID VARCHAR(20) NOT NULL,
+  CancellationTime timestamp NULL default NULL,
+  Ticket_ID VARCHAR(20) ,
+  Class INT ,
+  BookingTime timestamp NULL default NULL,
+  Src VARCHAR(20) ,
+  Dst VARCHAR(20) ,
+  Flight_no VARCHAR(20) ,
+  User_ID VARCHAR(20) ,
+  PassengerName VARCHAR(20) ,
+  PassengerEmail VARCHAR(20),
+  PassengerContact VARCHAR(20),
+  ArrivalTime timestamp NULL default NULL,
+  DepartureTime timestamp NULL default NULL,
   PRIMARY KEY (Ticket_ID),
   FOREIGN KEY (Flight_no) REFERENCES Flights(Flight_no),
-  FOREIGN KEY (Passenger_ID) REFERENCES Passengers(Passenger_ID),
-  FOREIGN KEY (Airline_ID) REFERENCES Airlines(Airline_ID)
+  FOREIGN KEY (User_ID) REFERENCES Users(User_ID)
 );
+
+
 CREATE TABLE Payment
 (
-  Payment_ID INT NOT NULL,
+  Payment_ID INT NOT NULL AUTO_INCREMENT,
   Account_credited VARCHAR(20) NOT NULL,
   Account_debited VARCHAR(20) NOT NULL,
-  TimeOfPayment timestamp NOT NULL,
-  ModeOfPayment INT NOT NULL,
+  TimeOfPayment timestamp NULL default NULL,
+  ModeOfPayment VARCHAR(20) NOT NULL,
   Amount INT NOT NULL,
-  Airline_ID VARCHAR(20) NOT NULL,
   Ticket_ID VARCHAR(20) NOT NULL,
-  FOREIGN KEY (Airline_ID) REFERENCES Airlines(Airline_ID),
   FOREIGN KEY (Ticket_ID) REFERENCES Ticket(Ticket_ID),
-  UNIQUE (Payment_ID)
+  PRIMARY KEY (Payment_ID)
 );
 
 
@@ -215,3 +213,35 @@ WHERE Table1.Airport_ID_Dst = Table2.Airport_ID_Src  && Table1.Airport_ID_Src='D
 && Position('2' in Table2.DepartureDays) && time(Table1.ArrivalTime)<(Table2.DepartureTime);
 
 ------
+
+-- Check Availiblity 
+
+
+SELECT Flights.Economy from Flights where Flights.Flight_no='I5 948';
+SELECT count(*) from Ticket where Ticket.Flight_no='I5 948' && Ticket.ArrivalTime='00:05' && Ticket.DepartureTime='01:25' && Ticket.Class=0;
+;
+
+
+-- Booking
+$Ticket_ID = SELECT Airline_ID FROM Flights where Flight_no = 'I5 948';
+$var = SELECT count(*) from Ticket where Flight_no = 'I5 948';
+$Ticket_ID = $Ticket_ID." ".$var;
+-- how to find User_ID
+
+insert into Ticket VALUES(1,0,0,NULL,'Economy',currtime(),'src','dst','I5 948','User_ID',
+'Name','Email','7777777','ArrivalTime','DepartureTime');
+
+--reservation payment
+insert into Payment(Account_credited,Account_debited,TimeOfPayment,ModeOfPayment,Amount,Ticket_ID) 
+  VALUES((SELECT Account_No from Flights where Flight_no='I5 948'),'$Account_debited',currtime(),'Mode','$amount','$Ticket_ID');
+
+
+-- cancellation payment
+$DepartureTime = SELECT DepartureTime from Ticket where Ticket_ID = '$Ticket_ID';
+if($DepartureTime - currtime >= minTime)
+{
+Update Ticket set Cancellation_Status = '1' and CancellationTime='currtime' and BookingStatus = '0' where Ticket_ID = "$Ticket_ID";
+-- send request to Airline to refund
+}
+else
+echo "Cannot be cancelled";
