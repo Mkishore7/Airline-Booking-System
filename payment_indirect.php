@@ -42,7 +42,7 @@ if(isset($_POST["pay"]))
     $sql = "insert into Ticket VALUES(1,0,0,NULL,'$Ticket_ID','$Class',CURRENT_TIMESTAMP(),'$Airport_Id_Src','$Airport_Id_Dst','$Flight_no','$User_ID','$Passenger_name_','$Passenger_email_','$Passenger_contact_','$ArrivalTime','$DepartureTime','$Date_of_travelling')";
     $connection->query($sql);
    // var_dump($sql);
-    $sql = "insert into Payment(Account_credited,Account_debited,TimeOfPayment,ModeOfPayment,Amount,Ticket_ID) 
+    $sql = "insert into Payment(Account_credited,Account_debited,TimeOfPayment,ModeOfPayment,Amount,Ticket_ID)
       VALUES('$Account_credited','$Account_No',CURRENT_TIMESTAMP(),'online','$Total_Price','$Ticket_ID')";
     $result = $connection->query($sql);
     }
@@ -81,11 +81,11 @@ if(isset($_POST["pay"]))
     $sql = "insert into Ticket VALUES(1,0,0,NULL,'$Ticket_ID','$Class',CURRENT_TIMESTAMP(),'$Airport_Id_Src','$Airport_Id_Dst','$Flight_no','$User_ID','$Passenger_name_','$Passenger_email_','$Passenger_contact_','$ArrivalTime','$DepartureTime','$Date_of_travelling')";
     $connection->query($sql);
    // var_dump($sql);
-    $sql = "insert into Payment(Account_credited,Account_debited,TimeOfPayment,ModeOfPayment,Amount,Ticket_ID) 
+    $sql = "insert into Payment(Account_credited,Account_debited,TimeOfPayment,ModeOfPayment,Amount,Ticket_ID)
       VALUES('$Account_credited','$Account_No',CURRENT_TIMESTAMP(),'online','$Total_Price','$Ticket_ID')";
     $result = $connection->query($sql);
     }
-    echo "<script type='text/javascript'>window.location.href = '/airlinereservationsystem/payment_done.php';</script>";
+    echo "<script type='text/javascript'>window.location.href = 'payment_done.php';</script>";
     exit();
 }
 
@@ -113,9 +113,7 @@ for($x=1;$x<=$_SESSION["No_of_Seats_indirect"];$x++)
     $_SESSION["Passenger_contact_".$x.""]=$_POST["Passenger_contact_".$x.""];
 }
 echo "<br><br>";
-echo '<form action="/airlinereservationsystem/payment_indirect.php" method = "post">';
+echo '<form action="payment_indirect.php" method = "post">';
 echo 'Account No : <input type="text" name="Account_No" required>';
 echo '<input type="Submit" name="pay" value = "PAY!!">';
 ?>
-
-

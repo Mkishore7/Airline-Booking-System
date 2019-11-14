@@ -61,7 +61,7 @@ while($row = $result->fetch_assoc())
               echo "<td>" .$interval->format('%h')." Hours ".$interval->format('%i')." Minutes". "</td>";
               echo "<td>". $price."</td>";
               echo "<td>";
-              echo '<form action="\AirlineReservationSystem\ticketInformation.php" method="post">';
+              echo '<form action="\ticketInformation.php" method="post">';
               echo '<input type="hidden" name="DepartureTime" value= '.$row["DepartureTime"].' > ';
               echo '<input type="hidden" name="ArrivalTime" value= '.$row["ArrivalTime"].' > ';
               $x = $row["Flight_no"];
@@ -96,7 +96,7 @@ echo "<table border='4' cellspacing='0' style='float : left'>
 <th>TOTAL DURATION</th>
 <th><b>BOOK NOW</b></th>
 </tr>";
-$sql="SELECT Table1.Flight_no as Start_Flight_no,Table1.DepartureTime as Start_DepartureTime,Table1.ArrivalTime as Mid_ArrivalTime,Table1.Airport_ID_Dst as Mid_Airport,Table2.Flight_no as Mid_Flight_No,Table2.DepartureTime as Mid_DepartureTime,Table2.ArrivalTime as Final_ArrivalTime FROM Passes as Table1, Passes as Table2 
+$sql="SELECT Table1.Flight_no as Start_Flight_no,Table1.DepartureTime as Start_DepartureTime,Table1.ArrivalTime as Mid_ArrivalTime,Table1.Airport_ID_Dst as Mid_Airport,Table2.Flight_no as Mid_Flight_No,Table2.DepartureTime as Mid_DepartureTime,Table2.ArrivalTime as Final_ArrivalTime FROM Passes as Table1, Passes as Table2
 WHERE Table1.Airport_ID_Dst = Table2.Airport_ID_Src  && Table1.Airport_ID_Src='DEL' && Table2.Airport_ID_Dst='CCU'
 && Position('$day_number' in Table1.DepartureDays) && Position('$day_number' in Table1.ArrivalDays) && Position('$day_number' in Table2.DepartureDays)
 && Position('$day_number' in Table2.DepartureDays) && time(Table1.ArrivalTime)<(Table2.DepartureTime) limit 20";
@@ -139,7 +139,7 @@ while($row = $result->fetch_assoc())
               echo "<td>" . $price . "</td>";
               echo "<td>" .$interval->format('%h')." Hours ".$interval->format('%i')." Minutes". "</td>";
               echo "<td>";
-              echo '<form action="\AirlineReservationSystem\ticketInformation_indirect.php" method="post">';
+              echo '<form action="ticketInformation_indirect.php" method="post">';
               echo '<input type="hidden" name="Start_DepartureTime" value= '.$row["Start_DepartureTime"].' > ';
               echo '<input type="hidden" name="Mid_ArrivalTime" value= '.$row["Mid_ArrivalTime"].' > ';
               echo '<input type="hidden" name="Start_Flight_no" value="'.$row["Start_Flight_no"].'" >';

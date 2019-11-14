@@ -42,26 +42,31 @@
      <form role="form" action="viewFlights.php" method="post">
        <div class="row">
          <div class="col-sm-6">
-           <label for="from">From:</label>
-           <input type="text" class="form-control" id="from" name="from" placeholder="City or Code" required>
+           <label for="Source">From:</label>
+           <input type="text" class="form-control" id="Source" name="Source" placeholder="City or Code" required>
          </div>
          <div class="col-sm-6">
-           <label for="to">To:</label>
-           <input type="text" class="form-control" id="to" name="to" placeholder="City or Code" required>
+           <label for="Destination">To:</label>
+           <input type="text" class="form-control" id="Destination" name="Destination" placeholder="City or Code" required>
          </div>
        </div>
        <hr >
        <div class="row">
          <div class="col-sm-6">
-           <label for="depart">Depart:</label>
-           <input type="date" class="form-control" id="depart" name="depart" required>
+           <label for="Date">Depart:</label>
+           <input type="date" class="form-control" id="Date" name="Date" required>
          </div>
          <hr >
          <div class="col-sm-6">
-           <label for="class">Class:</label>
-           <select class="form-control" name="class">
+           <label for="no_of_seats">Number Of Seats:</label>
+           <input type="number" class="form-control" id="no_of_seats" name="no_of_seats" min="1" required>
+         </div>
+         <hr >
+         <div class="col-sm-6">
+           <label for="Class">Class:</label>
+           <select class="form-control" name="Class">
              <option value="Economy">Economy</option>
-             <option value="Business">Business</option>
+             <option value="Business">Business</option>              <option value="First Class">First Class</option>
            </select>
          </div>
        </div>
@@ -69,10 +74,10 @@
        <div class="row">
          <div class="col-sm-6">
            <label class="radio-inline">
-             <input type="radio" name="stop" value="nonstop" checked>Non-Stop
+             <input type="radio" name="Via" value="nonstop" checked>Non-Stop
            </label>
            <label class="radio-inline">
-             <input type="radio" name="stop" value="1stop">1 Stop
+             <input type="radio" name="Via" value="1stop">1 Stop
            </label>
          </div>
        </div>

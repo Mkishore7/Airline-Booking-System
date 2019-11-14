@@ -11,7 +11,7 @@ $Flight_no = $_POST["Flight_no"];
 $Class = $_POST["Class"];
 echo "<h1>Enter details of Passengers</h1>";
 echo "<br><br>";
-echo '<form action="/airlinereservationsystem/payment.php" method = "post">';
+echo '<form action="/payment.php" method = "post">';
 for($x=1;$x<=$No_of_seats;$x++)
 {
 	echo "Enter details for passenger ".$x."<br>";

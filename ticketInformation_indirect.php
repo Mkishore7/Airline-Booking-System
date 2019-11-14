@@ -15,7 +15,7 @@ $_SESSION["Final_ArrivalTime"]=$_POST["Final_ArrivalTime"];
 
 echo "<h1>Enter details of Passengers</h1>";
 echo "<br><br>";
-echo '<form action="/airlinereservationsystem/payment_indirect.php" method = "post">';
+echo '<form action="payment_indirect.php" method = "post">';
 for($x=1;$x<=$_SESSION["No_of_Seats_indirect"];$x++)
 {
 	echo "Enter details for passenger ".$x."<br>";
