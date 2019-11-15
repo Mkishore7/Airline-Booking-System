@@ -39,7 +39,7 @@ if(isset($_POST["pay"]))
     $Date_of_travelling=$_SESSION["Date_of_travelling"];
     $Account_No=$_POST["Account_No"];
     $Total_Price=$_SESSION["Total_Price"];
-    $sql = "insert into Ticket VALUES(1,0,0,NULL,'$Ticket_ID','$Class',CURRENT_TIMESTAMP(),'$Airport_Id_Src','$Airport_Id_Dst','$Flight_no','$User_ID','$Passenger_name_','$Passenger_email_','$Passenger_contact_','$ArrivalTime','$DepartureTime','$Date_of_travelling')";
+    $sql = "insert into Ticket VALUES(1,0,0,NULL,'$Ticket_ID','$Class',CURRENT_TIMESTAMP(),'$Airport_Id_Src','$Airport_Id_Dst','$Flight_no','$User_ID','$Passenger_name_','$Passenger_email_','$Passenger_contact_','$DepartureTime','$ArrivalTime','$Date_of_travelling')";
     $connection->query($sql);
    // var_dump($sql);
     $sql = "insert into Payment(Account_credited,Account_debited,TimeOfPayment,ModeOfPayment,Amount,Ticket_ID)
@@ -78,7 +78,7 @@ if(isset($_POST["pay"]))
     $Date_of_travelling=$_SESSION["Date_of_travelling"];
     $Account_No=$_POST["Account_No"];
     $Total_Price=$_SESSION["Total_Price"];
-    $sql = "insert into Ticket VALUES(1,0,0,NULL,'$Ticket_ID','$Class',CURRENT_TIMESTAMP(),'$Airport_Id_Src','$Airport_Id_Dst','$Flight_no','$User_ID','$Passenger_name_','$Passenger_email_','$Passenger_contact_','$ArrivalTime','$DepartureTime','$Date_of_travelling')";
+    $sql = "insert into Ticket VALUES(1,0,0,NULL,'$Ticket_ID','$Class',CURRENT_TIMESTAMP(),'$Airport_Id_Src','$Airport_Id_Dst','$Flight_no','$User_ID','$Passenger_name_','$Passenger_email_','$Passenger_contact_','$DepartureTime','$ArrivalTime','$Date_of_travelling')";
     $connection->query($sql);
    // var_dump($sql);
     $sql = "insert into Payment(Account_credited,Account_debited,TimeOfPayment,ModeOfPayment,Amount,Ticket_ID)
