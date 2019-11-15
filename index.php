@@ -22,6 +22,7 @@
       </div>
     </div>
  -->
+
  <div class="container" style="margin:50px 100px 100px 100px;">
    <h1><b>Search Flights</b></h1>
    <br />
@@ -33,9 +34,9 @@
      <div class="btn-group">
        <button id="button2" type="button" href="#roundtrip" class="btn btn-dark">Round-trip</button>
      </div>
-     <div class="btn-group">
+     <!-- <div class="btn-group">
        <button id="button3" type="button" href="#all" class="btn btn-dark">Search all flights</button>
-     </div>
+     </div> -->
    </div>
    <hr />
    <div id="oneway">
@@ -54,7 +55,7 @@
        <div class="row">
          <div class="col-sm-6">
            <label for="Date">Depart:</label>
-           <input type="date" class="form-control" id="Date" name="Date" required>
+           <input type="date" class="form-control" id="Date" name="Date" required min=<?php echo date('Y-m-d');?>>
          </div>
          <hr >
          <div class="col-sm-6">
@@ -94,7 +95,7 @@
      </form>
    </div>
    <div id="roundtrip">
-     <form role="form" action="SearchResultRoundtrip.php" method="post">
+     <form role="form" action="roundTrip.php" method="post">
        <div class="row">
          <div class="col-sm-6">
            <label for="Source">From:</label>
@@ -118,9 +119,14 @@
        </div>
        <hr >
        <div class="row">
+          <div class="col-sm-6">
+            <label for="no_of_seats">Number Of Seats:</label>
+            <input type="number" class="form-control" id="no_of_seats" name="no_of_seats" min="1" required>
+          </div>
+          <hr >
          <div class="col-sm-6">
-           <label for="class">Class:</label>
-           <select class="form-control" name="class">
+           <label for="Class">Class:</label>
+           <select class="form-control" name="Class">
              <option value="Economy">Economy</option>
              <option value="Business">Business</option>
            </select>
@@ -143,7 +149,7 @@
      </form>
    </div>
    <div id="all">
-     <form role="form" action="SearchResultAll.php" method="post">
+     <form role="form" action="viewFlightsAll.php" method="post">
        <div class="row">
          <div class="col-sm-6">
            <label for="Date">Select a date:</label>

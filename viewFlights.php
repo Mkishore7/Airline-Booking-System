@@ -105,7 +105,7 @@ echo "<table border='4' cellspacing='0' style='float : left'>
 $sql="SELECT Table1.Flight_no as Start_Flight_no,Table1.DepartureTime as Start_DepartureTime,Table1.ArrivalTime as Mid_ArrivalTime,Table1.Airport_ID_Dst as Mid_Airport,Table2.Flight_no as Mid_Flight_No,Table2.DepartureTime as Mid_DepartureTime,Table2.ArrivalTime as Final_ArrivalTime FROM Passes as Table1, Passes as Table2
 WHERE Table1.Airport_ID_Dst = Table2.Airport_ID_Src  && Table1.Airport_ID_Src='DEL' && Table2.Airport_ID_Dst='CCU'
 && Position('$day_number' in Table1.DepartureDays) && Position('$day_number' in Table1.ArrivalDays) && Position('$day_number' in Table2.DepartureDays)
-&& Position('$day_number' in Table2.DepartureDays) && time(Table1.ArrivalTime)<(Table2.DepartureTime) limit 20";
+&& Position('$day_number' in Table2.DepartureDays) && time(Table1.ArrivalTime)<(Table2.DepartureTime) ";
 $result = $connection->query($sql);
 while($row = $result->fetch_assoc())
 {

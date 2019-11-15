@@ -9,16 +9,16 @@
 		die("Connection failed: \n");
 	}
     $search=$_GET['term'];
-    $sql="select * from airport where Airport_ID like '%".$search."%' order by Airport_ID";
+    $sql="select * from airport where city like '%".$search."%' order by city";
     $result=mysqli_query($conn,$sql);
     $sdata=array();
     if(mysqli_num_rows($result)>0){
         while($row=mysqli_fetch_assoc($result)){
             $data['id']=$row['Airport_ID'];
-            $data['value']=$row['Airport_ID'];
+            $data['value']=$row['City'];
             array_push($sdata,$data);
         }
     }
-    
+
 echo json_encode($sdata);
 ?>

@@ -63,7 +63,7 @@ if(isset($_POST['register']))
     //if no errors are found, registration will be complete.
     if(count($errors)==0)
     {
-      $password = md5($password_1);
+      $password = $password_1;
       //password is encrypted before storing in the database.
       $query1 = "SELECT * FROM users WHERE email = '$email'";
   		$query2 = "SELECT * FROM users WHERE username = '$username'";

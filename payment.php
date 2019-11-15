@@ -16,7 +16,7 @@ if(isset($_POST["pay"]))
 	/*
 	   Execute Queries
 	*/
-	$User_ID = "rk957019";
+	$User_ID = $_SESSION['username'];
 	for($x=1;$x<=$_SESSION["No_of_Seats"];$x++)
 	{
 	$Flight_no=$_SESSION["Flight_no"];

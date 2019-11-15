@@ -6,7 +6,7 @@ if(isset($_POST["pay"]))
 	$connection = new mysqli("localhost","root","","airlineresvervationsystem");
     if($connection->connect_error){
     die("Connection failed: ".$connection->connect_error."\n");}
-    $User_ID = "rk957019";
+    	$User_ID = $_SESSION['username'];
 	for($x=1;$x<=$_SESSION["No_of_Seats_indirect"];$x++)
 	{
 	$Flight_no=$_SESSION["Start_Flight_no"];
