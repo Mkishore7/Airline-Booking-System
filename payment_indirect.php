@@ -1,6 +1,19 @@
 <?php
+require_once('server.php');
+require_once('errors.php');
 
-session_start();
+if(empty($_SESSION['username'])) {
+	array_push($errors, "Please Login First.");
+  header('location: login.php');
+}
+include('templates/header.php');
+?>
+
+<body>
+	<?php include('templates/navbar.php'); ?>
+
+
+<?php
 if(isset($_POST["pay"]))
 {
 	$connection = new mysqli("localhost","root","","airlineresvervationsystem");
@@ -12,14 +25,18 @@ if(isset($_POST["pay"]))
 	for($x=1;$x<=$_SESSION["No_of_Seats_indirect"];$x++)
 	{
 	$Flight_no=$_SESSION["Start_Flight_no"];
-	$sql = "SELECT Airline_ID,Account_No FROM Flights where Flight_no = '$Flight_no'";
+	  $Class=$_SESSION["Class_indirect"];
+    $col = $Class.'Price';
+	$sql = "SELECT Airline_ID,Account_No,$col FROM Flights where Flight_no = '$Flight_no'";
 	$result = $connection->query($sql);
 	$Ticket_ID="";
 	$Account_credited="";
+    $newPrice=0;
 	while($row = $result->fetch_assoc())
     {
        $Ticket_ID = $row["Airline_ID"];
        $Account_credited = $row["Account_No"];
+       $newPrice=$row["$col"];
     }
     $sql = "SELECT count(*) as Total from Ticket ";
 	$result = $connection->query($sql);
@@ -41,6 +58,11 @@ if(isset($_POST["pay"]))
     $Date_of_travelling=$_SESSION["Date_of_travelling"];
     $Account_No=$_POST["Account_No"];
     $Total_Price=$_SESSION["Total_Price"];
+		 $Total_Price=$newPrice;
+    if($_SESSION["mul"]>=0)
+              {
+                $Total_Price = $Total_Price + ceil($Total_Price*$_SESSION["mul"]);
+              }
     $sql = "insert into Ticket VALUES(1,0,0,NULL,'$Ticket_ID','$Class','$curr','$Airport_Id_Src','$Airport_Id_Dst','$Flight_no','$User_ID','$Passenger_name_','$Passenger_email_','$Passenger_contact_','$DepartureTime','$ArrivalTime','$Date_of_travelling')";
     $connection->query($sql);
    // var_dump($sql);
@@ -51,14 +73,18 @@ if(isset($_POST["pay"]))
     for($x=1;$x<=$_SESSION["No_of_Seats_indirect"];$x++)
 	{
 	$Flight_no=$_SESSION["Mid_Flight_No"];
-	$sql = "SELECT Airline_ID,Account_No FROM Flights where Flight_no = '$Flight_no'";
+	$Class=$_SESSION["Class_indirect"];
+    $col = $Class.'Price';
+	$sql = "SELECT Airline_ID,Account_No,$col FROM Flights where Flight_no = '$Flight_no'";
 	$result = $connection->query($sql);
 	$Ticket_ID="";
 	$Account_credited="";
+    $newPrice=0;
 	while($row = $result->fetch_assoc())
     {
        $Ticket_ID = $row["Airline_ID"];
        $Account_credited = $row["Account_No"];
+       $newPrice=$row["$col"];
     }
     $sql = "SELECT count(*) as Total from Ticket ";
 	$result = $connection->query($sql);
@@ -80,6 +106,11 @@ if(isset($_POST["pay"]))
     $Date_of_travelling=$_SESSION["Date_of_travelling"];
     $Account_No=$_POST["Account_No"];
     $Total_Price=$_SESSION["Total_Price"];
+		 $Total_Price=$newPrice;
+    if($_SESSION["mul"]>=0)
+              {
+                $Total_Price = $Total_Price + ceil($Total_Price*$_SESSION["mul"]);
+              }
     $sql = "insert into Ticket VALUES(1,0,0,NULL,'$Ticket_ID','$Class','$curr','$Airport_Id_Src','$Airport_Id_Dst','$Flight_no','$User_ID','$Passenger_name_','$Passenger_email_','$Passenger_contact_','$DepartureTime','$ArrivalTime','$Date_of_travelling')";
     $connection->query($sql);
    // var_dump($sql);
@@ -114,8 +145,17 @@ for($x=1;$x<=$_SESSION["No_of_Seats_indirect"];$x++)
 	$_SESSION["Passenger_email_".$x.""]=$_POST["Passenger_email_".$x.""];
     $_SESSION["Passenger_contact_".$x.""]=$_POST["Passenger_contact_".$x.""];
 }
-echo "<br><br>";
+echo "<br>";
 echo '<form action="payment_indirect.php" method = "post">';
 echo 'Account No : <input type="text" name="Account_No" required>';
 echo '<input type="Submit" name="pay" value = "PAY!!">';
+
+echo "<br>";
+echo "<br>";
+echo "<br>";
+
 ?>
+
+
+
+  <?php include('templates/footer.php'); ?>

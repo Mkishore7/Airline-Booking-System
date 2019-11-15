@@ -113,11 +113,11 @@
        <div class="row">
          <div class="col-sm-6">
            <label for="Date">Depart:</label>
-           <input type="date" class="form-control" id="Date" name="Date" required>
+           <input type="date" class="form-control" id="Date" name="Date" required min=<?php echo date('Y-m-d');?>>
          </div>
          <div class="col-sm-6">
            <label for="returnDate">Return:</label>
-           <input type="date" class="form-control" id="returnDate" name="returnDate" required>
+           <input type="date" class="form-control" id="returnDate" name="returnDate" required min=<?php echo date('Y-m-d');?>>
          </div>
        </div>
        <hr >

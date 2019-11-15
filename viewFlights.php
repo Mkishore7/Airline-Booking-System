@@ -1,5 +1,17 @@
 <?php
-session_start();
+require_once('server.php');
+require_once('errors.php');
+
+if(empty($_SESSION['username'])) {
+	array_push($errors, "Please Login First.");
+  header('location: login.php');
+}
+include('templates/header.php');
+?>
+
+<body>
+	<?php include('templates/navbar.php'); ?>
+<?php
 
 $Airport_Id_Src = $_POST['Source'];
 $Airport_Id_Dst = $_POST['Destination'];
@@ -10,6 +22,14 @@ $_SESSION["Date_of_travelling"]=$Date_of_travelling;
 $Class = $_POST['Class'];
 $No_of_Seats = $_POST['no_of_seats'];
 $Via = $_POST['Via'];
+$now = new DateTime();
+$today= $now->format('Y-m-d');
+$date1=date_create($today);
+$date2=date_create($Date_of_travelling);
+$diff=date_diff($date1,$date2);
+$days_gap= $diff->format("%a");
+$mul = (1.0 - $days_gap/(100.0));
+$_SESSION["mul"]=$mul;
 
 $connection = new mysqli("localhost","root","","airlineresvervationsystem");
 if($connection->connect_error){
@@ -46,6 +66,10 @@ while($row = $result->fetch_assoc())
               {
                  $price = $row1["$col"];
               }
+			  if($mul>=0)
+              {
+                $price = $price + ceil($price*$mul);
+              }
               echo "<tr>";
               echo "<td>" . $row["Flight_no"]. "</td>";
               echo "<td>" . $row["DepartureTime"] . "</td>";
@@ -62,7 +86,7 @@ while($row = $result->fetch_assoc())
               echo "<td>" .$interval->format('%h')." Hours ".$interval->format('%i')." Minutes". "</td>";
               echo "<td>". $price."</td>";
               echo "<td>";
-              echo '<form action="\AirlineReservationSystem\ticketInformation.php" method="post">';
+              echo '<form action="ticketInformation.php" method="post">';
               echo '<input type="hidden" name="DepartureTime" value= '.$row["DepartureTime"].' > ';
               echo '<input type="hidden" name="ArrivalTime" value= '.$row["ArrivalTime"].' > ';
               $x = $row["Flight_no"];
@@ -100,8 +124,8 @@ echo "<table border='4' cellspacing='0' style='float : left'>
 
 $STARTING=$_SESSION["Airport_Id_Src"];
 $ENDING=$_SESSION["Airport_Id_Dst"];
-$sql="SELECT DISTINCT Table1.Flight_no as Start_Flight_no,Table1.DepartureTime as Start_DepartureTime,Table1.ArrivalTime as Mid_ArrivalTime,Table1.Airport_ID_Dst as Mid_Airport,Table2.Flight_no as Mid_Flight_No,Table2.DepartureTime as Mid_DepartureTime,Table2.ArrivalTime as Final_ArrivalTime FROM Passes as Table1, Passes as Table2 
-WHERE Table1.Airport_ID_Dst = Table2.Airport_ID_Src  && Table1.Airport_ID_Src='$STARTING' 
+$sql="SELECT DISTINCT Table1.Flight_no as Start_Flight_no,Table1.DepartureTime as Start_DepartureTime,Table1.ArrivalTime as Mid_ArrivalTime,Table1.Airport_ID_Dst as Mid_Airport,Table2.Flight_no as Mid_Flight_No,Table2.DepartureTime as Mid_DepartureTime,Table2.ArrivalTime as Final_ArrivalTime FROM Passes as Table1, Passes as Table2
+WHERE Table1.Airport_ID_Dst = Table2.Airport_ID_Src  && Table1.Airport_ID_Src='$STARTING'
 && Table2.Airport_ID_Dst='$ENDING'
 && Position('$day_number' in Table1.DepartureDays) && Position('$day_number' in Table1.ArrivalDays) && Position('$day_number' in Table2.DepartureDays)
 && isAvailable(Table1.Flight_no,Table1.ArrivalTime,Table1.DepartureTime,'$Class',convert('$Date_of_travelling',date),$No_of_Seats)>0
@@ -123,10 +147,13 @@ while($row = $result->fetch_assoc())
               $var = $row["Mid_Flight_No"];
               $sql1 = "SELECT $col from flights where Flight_no='$var'";
               $result1 = $connection->query($sql1);
-              $price =0;
               while($row1 = $result1->fetch_assoc())
               {
                  $price = $price + $row1["$col"];
+              }
+			  if($mul>=0)
+              {
+                $price = $price + ceil($price*$mul);
               }
               echo "<tr>";
               echo "<td>" . $row["Start_Flight_no"]. "</td>";
@@ -148,7 +175,7 @@ while($row = $result->fetch_assoc())
               echo "<td>" . $price . "</td>";
               echo "<td>" .$interval->format('%h')." Hours ".$interval->format('%i')." Minutes". "</td>";
               echo "<td>";
-              echo '<form action="\AirlineReservationSystem\ticketInformation_indirect.php" method="post">';
+              echo '<form action="ticketInformation_indirect.php" method="post">';
               echo '<input type="hidden" name="Start_DepartureTime" value= '.$row["Start_DepartureTime"].' > ';
               echo '<input type="hidden" name="Mid_ArrivalTime" value= '.$row["Mid_ArrivalTime"].' > ';
               echo '<input type="hidden" name="Start_Flight_no" value="'.$row["Start_Flight_no"].'" >';
@@ -194,15 +221,15 @@ echo "<table border='4' cellspacing='0' style='float : left'>
 <th><b>BOOK NOW</b></th>
 </tr>";
 
-$sql = "SELECT DISTINCT t1.Airport_ID_Src as Start_Airport,t1.Flight_no as Start_Flight_no,t1.DepartureTime as Start_DepartureTime,t1.ArrivalTime as First_Stop_ArrivalTime, t1.Airport_ID_Dst as First_Stop_Airport, t2.Flight_no as First_Stop_Flight_No, t2.DepartureTime as First_Stop_DepartureTime, t2.ArrivalTime as Second_Stop_ArrivalTime, t2.Airport_ID_Dst as Second_Stop_Airport, t3.Flight_no as Second_Stop_Flight_No, t3.DepartureTime as Second_Stop_DepartureTime , t3.ArrivalTime as Final_ArrivalTime ,t3.Airport_ID_Dst as Final_Airport from Passes as t1, Passes as t2, Passes as t3  where 
-t1.Airport_ID_Src = '$Airport_Id_Src' 
-&& t1.Airport_ID_Dst = t2.Airport_ID_Src 
-&& t2.Airport_ID_Dst = t3.Airport_ID_Src 
-&& t3.Airport_ID_Dst = '$Airport_Id_Dst' 
+$sql = "SELECT DISTINCT t1.Airport_ID_Src as Start_Airport,t1.Flight_no as Start_Flight_no,t1.DepartureTime as Start_DepartureTime,t1.ArrivalTime as First_Stop_ArrivalTime, t1.Airport_ID_Dst as First_Stop_Airport, t2.Flight_no as First_Stop_Flight_No, t2.DepartureTime as First_Stop_DepartureTime, t2.ArrivalTime as Second_Stop_ArrivalTime, t2.Airport_ID_Dst as Second_Stop_Airport, t3.Flight_no as Second_Stop_Flight_No, t3.DepartureTime as Second_Stop_DepartureTime , t3.ArrivalTime as Final_ArrivalTime ,t3.Airport_ID_Dst as Final_Airport from Passes as t1, Passes as t2, Passes as t3  where
+t1.Airport_ID_Src = '$Airport_Id_Src'
+&& t1.Airport_ID_Dst = t2.Airport_ID_Src
+&& t2.Airport_ID_Dst = t3.Airport_ID_Src
+&& t3.Airport_ID_Dst = '$Airport_Id_Dst'
 && isAvailable(t1.Flight_no,t1.ArrivalTime,t1.DepartureTime,'$Class',convert('$Date_of_travelling',date),$No_of_Seats)>0
 && isAvailable(t2.Flight_no,t2.ArrivalTime,t2.DepartureTime,'$Class',convert('$Date_of_travelling',date),$No_of_Seats)>0
 && isAvailable(t3.Flight_no,t3.ArrivalTime,t3.DepartureTime,'$Class',convert('$Date_of_travelling',date),$No_of_Seats)>0
-&& Position('$day_number' in t1.DepartureDays) && Position('$day_number' in t1.ArrivalDays) 
+&& Position('$day_number' in t1.DepartureDays) && Position('$day_number' in t1.ArrivalDays)
 && Position('$day_number' in t2.DepartureDays) && Position('$day_number' in t1.DepartureDays)
 && Position('$day_number' in t3.DepartureDays) && Position('$day_number' in t3.DepartureDays)
 && convert(t2.DepartureTime,time)< convert(t2.ArrivalTime,time)
@@ -224,6 +251,32 @@ while($row = $result->fetch_assoc())
               /*
                Calculate price...
               */
+			  $price =0;
+              $var = $row["Start_Flight_no"];
+               $sql1 = "SELECT $col from flights where Flight_no='$var'";
+               $result1 = $connection->query($sql1);
+              while($row1 = $result1->fetch_assoc())
+              {
+                 $price = $row1["$col"];
+              }
+              $var = $row["First_Stop_Flight_No"];
+              $sql1 = "SELECT $col from flights where Flight_no='$var'";
+              $result1 = $connection->query($sql1);
+              while($row1 = $result1->fetch_assoc())
+              {
+                  $price = $price+ $row1["$col"];
+              }
+               $var = $row["Second_Stop_Flight_No"];
+               $sql1 = "SELECT $col from flights where Flight_no='$var'";
+               $result1 = $connection->query($sql1);
+               while($row1 = $result1->fetch_assoc())
+              {
+                 $price = $price+ $row1["$col"];
+               }
+               if($mul>=0)
+              {
+                $price = $price + ceil($price*$mul);
+              }
               echo "<tr>";
               echo "<td>" . $row["Start_Airport"]. "</td>";
               echo "<td>" . $row["Start_Flight_no"]. "</td>";
@@ -250,7 +303,7 @@ while($row = $result->fetch_assoc())
               echo "<td>" . $price . "</td>";
               echo "<td>" .$interval->format('%h')." Hours ".$interval->format('%i')." Minutes". "</td>";
               echo "<td>";
-              echo '<form action="\AirlineReservationSystem\ticketInformation_twostop.php" method="post">';
+              echo '<form action="ticketInformation_twostop.php" method="post">';
               echo '<input type="hidden" name="Start_Airport" value="'.$row["Start_Airport"].'" >';
               echo '<input type="hidden" name="Start_Flight_no" value="'.$row["Start_Flight_no"].'" >';
               echo '<input type="hidden" name="Start_DepartureTime" value="'.$row["Start_DepartureTime"].'" >';
@@ -271,10 +324,11 @@ while($row = $result->fetch_assoc())
               echo '<input type="submit" name="submit" value ="submit">';
               echo '</form>';
               echo "</td>";
-              echo "</tr>"; 
+              echo "</tr>";
 }
 
-} 
+}
 
 $connection->close();
 ?>
+  <?php include('templates/footer.php'); ?>
