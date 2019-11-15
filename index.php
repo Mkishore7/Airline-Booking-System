@@ -67,8 +67,8 @@
            <label for="Class">Class:</label>
            <select class="form-control" name="Class">
              <option value="Economy">Economy</option>
-             <option value="Business">Business</option>
-             <option value="First Class">First Class</option>
+             <option value="Buisness">Business</option>
+             <option value="FirstClass">First Class</option>
            </select>
          </div>
        </div>
@@ -128,7 +128,8 @@
            <label for="Class">Class:</label>
            <select class="form-control" name="Class">
              <option value="Economy">Economy</option>
-             <option value="Business">Business</option>
+             <option value="Buisness">Business</option>
+             <option value="FirstClass">First Class</option>
            </select>
          </div>
        </div>
