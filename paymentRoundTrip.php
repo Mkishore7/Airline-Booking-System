@@ -16,6 +16,8 @@ if(isset($_POST["pay"]))
 	/*
 	   Execute Queries
 	*/
+	  $now = new DateTime();
+    $curr= $now->format('Y-m-d H:i:s');
 	$User_ID = $_SESSION['username'];
 	for($x=1;$x<=$_SESSION["No_of_Seats"];$x++)
 	{
@@ -61,20 +63,20 @@ if(isset($_POST["pay"]))
 
 
     $Total_Price=$_SESSION["Total_Price"];
-    $sql = "insert into Ticket VALUES(1,0,0,NULL,'$Ticket_ID','$Class',CURRENT_TIMESTAMP(),'$Airport_Id_Src','$Airport_Id_Dst','$Flight_no','$User_ID','$Passenger_name_','$Passenger_email_','$Passenger_contact_','$ArrivalTime','$DepartureTime','$Date_of_travelling')";
+    $sql = "insert into Ticket VALUES(1,0,0,NULL,'$Ticket_ID','$Class','$curr','$Airport_Id_Src','$Airport_Id_Dst','$Flight_no','$User_ID','$Passenger_name_','$Passenger_email_','$Passenger_contact_','$ArrivalTime','$DepartureTime','$Date_of_travelling')";
     $connection->query($sql);
 
     //retrn ticket
-    $sql = "insert into Ticket VALUES(1,0,0,NULL,'$returnTicket_ID','$returnClass',CURRENT_TIMESTAMP(),'$Airport_Id_Dst','$Airport_Id_Src','$returnFlight_no','$User_ID','$Passenger_name_','$Passenger_email_','$Passenger_contact_','$returnArrivalTime','$returnDepartureTime','$returnDate_of_travelling')";
+    $sql = "insert into Ticket VALUES(1,0,0,NULL,'$returnTicket_ID','$returnClass','$curr','$Airport_Id_Dst','$Airport_Id_Src','$returnFlight_no','$User_ID','$Passenger_name_','$Passenger_email_','$Passenger_contact_','$returnArrivalTime','$returnDepartureTime','$returnDate_of_travelling')";
     $connection->query($sql);
 
    // var_dump($connection);
     $sql = "insert into Payment(Account_credited,Account_debited,TimeOfPayment,ModeOfPayment,Amount,Ticket_ID)
-      VALUES('$Account_credited','$Account_No',CURRENT_TIMESTAMP(),'online','$Total_Price','$Ticket_ID')";
+      VALUES('$Account_credited','$Account_No','$curr','online','$Total_Price','$Ticket_ID')";
     $result = $connection->query($sql);
 
     $sql = "insert into Payment(Account_credited,Account_debited,TimeOfPayment,ModeOfPayment,Amount,Ticket_ID)
-      VALUES('$Account_credited','$Account_No',CURRENT_TIMESTAMP(),'online','$Total_Price','$returnTicket_ID')";
+      VALUES('$Account_credited','$Account_No','$curr','online','$Total_Price','$returnTicket_ID')";
     $result = $connection->query($sql);
     }
 

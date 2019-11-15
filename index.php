@@ -76,10 +76,13 @@
        <div class="row">
          <div class="col-sm-6">
            <label class="radio-inline">
-             <input type="radio" name="Via" value="nonstop" checked>Non-Stop
+             <input type="radio" name="Via" value="DIRECT" checked>Non-Stop
            </label>
            <label class="radio-inline">
-             <input type="radio" name="Via" value="1stop">1 Stop
+             <input type="radio" name="Via" value="ONE STOP">1 Stop
+           </label>
+           <label class="radio-inline">
+             <input type="radio" name="Via" value="TWO STOP">2 Stop
            </label>
          </div>
        </div>

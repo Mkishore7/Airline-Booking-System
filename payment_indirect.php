@@ -7,6 +7,8 @@ if(isset($_POST["pay"]))
     if($connection->connect_error){
     die("Connection failed: ".$connection->connect_error."\n");}
     	$User_ID = $_SESSION['username'];
+			  $now = new DateTime();
+		    $curr= $now->format('Y-m-d H:i:s');
 	for($x=1;$x<=$_SESSION["No_of_Seats_indirect"];$x++)
 	{
 	$Flight_no=$_SESSION["Start_Flight_no"];
@@ -39,11 +41,11 @@ if(isset($_POST["pay"]))
     $Date_of_travelling=$_SESSION["Date_of_travelling"];
     $Account_No=$_POST["Account_No"];
     $Total_Price=$_SESSION["Total_Price"];
-    $sql = "insert into Ticket VALUES(1,0,0,NULL,'$Ticket_ID','$Class',CURRENT_TIMESTAMP(),'$Airport_Id_Src','$Airport_Id_Dst','$Flight_no','$User_ID','$Passenger_name_','$Passenger_email_','$Passenger_contact_','$DepartureTime','$ArrivalTime','$Date_of_travelling')";
+    $sql = "insert into Ticket VALUES(1,0,0,NULL,'$Ticket_ID','$Class','$curr','$Airport_Id_Src','$Airport_Id_Dst','$Flight_no','$User_ID','$Passenger_name_','$Passenger_email_','$Passenger_contact_','$DepartureTime','$ArrivalTime','$Date_of_travelling')";
     $connection->query($sql);
    // var_dump($sql);
     $sql = "insert into Payment(Account_credited,Account_debited,TimeOfPayment,ModeOfPayment,Amount,Ticket_ID)
-      VALUES('$Account_credited','$Account_No',CURRENT_TIMESTAMP(),'online','$Total_Price','$Ticket_ID')";
+      VALUES('$Account_credited','$Account_No','$curr','online','$Total_Price','$Ticket_ID')";
     $result = $connection->query($sql);
     }
     for($x=1;$x<=$_SESSION["No_of_Seats_indirect"];$x++)
@@ -78,11 +80,11 @@ if(isset($_POST["pay"]))
     $Date_of_travelling=$_SESSION["Date_of_travelling"];
     $Account_No=$_POST["Account_No"];
     $Total_Price=$_SESSION["Total_Price"];
-    $sql = "insert into Ticket VALUES(1,0,0,NULL,'$Ticket_ID','$Class',CURRENT_TIMESTAMP(),'$Airport_Id_Src','$Airport_Id_Dst','$Flight_no','$User_ID','$Passenger_name_','$Passenger_email_','$Passenger_contact_','$DepartureTime','$ArrivalTime','$Date_of_travelling')";
+    $sql = "insert into Ticket VALUES(1,0,0,NULL,'$Ticket_ID','$Class','$curr','$Airport_Id_Src','$Airport_Id_Dst','$Flight_no','$User_ID','$Passenger_name_','$Passenger_email_','$Passenger_contact_','$DepartureTime','$ArrivalTime','$Date_of_travelling')";
     $connection->query($sql);
    // var_dump($sql);
     $sql = "insert into Payment(Account_credited,Account_debited,TimeOfPayment,ModeOfPayment,Amount,Ticket_ID)
-      VALUES('$Account_credited','$Account_No',CURRENT_TIMESTAMP(),'online','$Total_Price','$Ticket_ID')";
+      VALUES('$Account_credited','$Account_No','$curr','online','$Total_Price','$Ticket_ID')";
     $result = $connection->query($sql);
     }
     echo "<script type='text/javascript'>window.location.href = 'payment_done.php';</script>";

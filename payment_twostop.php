@@ -6,13 +6,13 @@ if(isset($_POST["pay"]))
     $connection = new mysqli("localhost","root","","airlineresvervationsystem");
     if($connection->connect_error){
     die("Connection failed: ".$connection->connect_error."\n");}
-    $User_ID = "rk957019";
+    $User_ID = $_SESSION['username'];
 
     /*
        For first flight
     */
     $now = new DateTime();
-    $curr= $now->format('Y-m-d H:i:s');    
+    $curr= $now->format('Y-m-d H:i:s');
 
     for($x=1;$x<=$_SESSION["No_of_Seats_twostop"];$x++)
 	{
@@ -49,7 +49,7 @@ if(isset($_POST["pay"]))
     $sql = "insert into Ticket VALUES(1,0,0,NULL,'$Ticket_ID','$Class','$curr','$Airport_Id_Src','$Airport_Id_Dst','$Flight_no','$User_ID','$Passenger_name_','$Passenger_email_','$Passenger_contact_','$ArrivalTime','$DepartureTime','$Date_of_travelling')";
     $connection->query($sql);
    // var_dump($sql);
-    $sql = "insert into Payment(Account_credited,Account_debited,TimeOfPayment,ModeOfPayment,Amount,Ticket_ID) 
+    $sql = "insert into Payment(Account_credited,Account_debited,TimeOfPayment,ModeOfPayment,Amount,Ticket_ID)
       VALUES('$Account_credited','$Account_No','$curr','online','$Total_Price','$Ticket_ID')";
     $connection->query($sql);
     }
@@ -91,7 +91,7 @@ if(isset($_POST["pay"]))
     $sql = "insert into Ticket VALUES(1,0,0,NULL,'$Ticket_ID','$Class','$curr','$Airport_Id_Src','$Airport_Id_Dst','$Flight_no','$User_ID','$Passenger_name_','$Passenger_email_','$Passenger_contact_','$ArrivalTime','$DepartureTime','$Date_of_travelling')";
     $connection->query($sql);
    // var_dump($sql);
-    $sql = "insert into Payment(Account_credited,Account_debited,TimeOfPayment,ModeOfPayment,Amount,Ticket_ID) 
+    $sql = "insert into Payment(Account_credited,Account_debited,TimeOfPayment,ModeOfPayment,Amount,Ticket_ID)
       VALUES('$Account_credited','$Account_No','$curr','online','$Total_Price','$Ticket_ID')";
     $connection->query($sql);
     }
@@ -133,11 +133,11 @@ if(isset($_POST["pay"]))
     $sql = "insert into Ticket VALUES(1,0,0,NULL,'$Ticket_ID','$Class','$curr','$Airport_Id_Src','$Airport_Id_Dst','$Flight_no','$User_ID','$Passenger_name_','$Passenger_email_','$Passenger_contact_','$ArrivalTime','$DepartureTime','$Date_of_travelling')";
     $connection->query($sql);
    // var_dump($sql);
-    $sql = "insert into Payment(Account_credited,Account_debited,TimeOfPayment,ModeOfPayment,Amount,Ticket_ID) 
+    $sql = "insert into Payment(Account_credited,Account_debited,TimeOfPayment,ModeOfPayment,Amount,Ticket_ID)
       VALUES('$Account_credited','$Account_No','$curr','online','$Total_Price','$Ticket_ID')";
     $connection->query($sql);
     }
-    echo "<script type='text/javascript'>window.location.href = '/airlinereservationsystem/payment_done.php';</script>";
+    echo "<script type='text/javascript'>window.location.href = 'payment_done.php';</script>";
     exit();
 }
 
@@ -171,7 +171,7 @@ for($x=1;$x<=$_SESSION["No_of_Seats_twostop"];$x++)
     $_SESSION["Passenger_contact_".$x.""]=$_POST["Passenger_contact_".$x.""];
 }
 echo "<br><br>";
-echo '<form action="/airlinereservationsystem/payment_twostop.php" method = "post">';
+echo '<form action="payment_twostop.php" method = "post">';
 echo 'Account No : <input type="text" name="Account_No" required>';
 echo '<input type="Submit" name="pay" value = "PAY!!">';
 

@@ -19,7 +19,7 @@ $_SESSION["Final_ArrivalTime_twostop"]=$_POST["Final_ArrivalTime"];
 $_SESSION["Final_Airport"]=$_POST["Final_Airport"];
 echo "<h1>Enter details of Passengers</h1>";
 echo "<br><br>";
-echo '<form action="/airlinereservationsystem/payment_twostop.php" method = "post">';
+echo '<form action="payment_twostop.php" method = "post">';
 for($x=1;$x<=$_SESSION["No_of_Seats_twostop"];$x++)
 {
 	echo "Enter details for passenger ".$x."<br>";
