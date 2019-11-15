@@ -180,4 +180,5 @@ echo '<form action="paymentRoundTrip.php" method = "post">';
 echo 'Account No : <input type="text" name="Account_No" required><br>';
 echo '<input type="Submit" name="pay" value = "PAY!!">';
 ?>
+
 <?php include('templates/footer.php'); ?>

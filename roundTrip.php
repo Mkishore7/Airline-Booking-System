@@ -25,15 +25,15 @@ if($connection->connect_error){
 $day_number = date("N", strtotime($Date_of_travelling));
 $return_day_number = date("N", strtotime($Return_date_of_travelling));
 
-$sql = "SELECT Flight_no,DepartureTime,ArrivalTime FROM Passes where Airport_ID_Src='$Airport_Id_Src' && Airport_ID_Dst='$Airport_Id_Dst'  && Position('$day_number' in ArrivalDays) && Position('$day_number' in DepartureDays)";
+$sql = "SELECT distinct Flight_no,DepartureTime,ArrivalTime FROM Passes where Airport_ID_Src='$Airport_Id_Src' && Airport_ID_Dst='$Airport_Id_Dst'  && Position('$day_number' in ArrivalDays) && Position('$day_number' in DepartureDays)";
 
-$sql2 = "SELECT Flight_no,DepartureTime,ArrivalTime FROM Passes where Airport_ID_Dst='$Airport_Id_Src' && Airport_ID_Src='$Airport_Id_Dst'  && Position('$return_day_number' in ArrivalDays) && Position('$return_day_number' in DepartureDays)";
+$sql2 = "SELECT distinct Flight_no,DepartureTime,ArrivalTime FROM Passes where Airport_ID_Dst='$Airport_Id_Src' && Airport_ID_Src='$Airport_Id_Dst'  && Position('$return_day_number' in ArrivalDays) && Position('$return_day_number' in DepartureDays)";
 
 $col = $Class.'Price';
 
 ?>
 
-<div class="container">
+<div class="container" style="margin: 50px 0px 50px 125px;">
   <div class="row">
     <div class="col-sm">
       <form action="roundTripTicketInfo.php" method="post">
@@ -88,7 +88,7 @@ while($row = $result->fetch_assoc())
               echo '<input type="hidden" name="No_of_Seats" value= '.$No_of_Seats.' > ';
               echo '<input type="hidden" name="Price" value= '.$price.' > ';
               echo '<input type="hidden" name="Class" value= '.$Class.' > ';
-              echo '<input type="radio" name="radio" value ="'.$row["Flight_no"].'">';
+              echo '<input type="radio" name="radio" value ="'.$row["Flight_no"].'" required>';
               // echo '</form>';
               echo "</td>";
               echo "</tr>";
@@ -102,7 +102,7 @@ $result->free();
       <?php
         echo "<table style='float : left' border='4' cellspacing='0' >
         <tr>
-        <td  colspan='8'>ALL DIRECT FLIGHTS</td>
+        <td  colspan='8'>ALL DIRECT RETURN FLIGHTS</td>
         </tr>
         <tr>
         <th>Flight_no</th>
@@ -148,7 +148,7 @@ $result->free();
                       echo '<input type="hidden" name="returnNo_of_Seats" value= '.$No_of_Seats.' > ';
                       echo '<input type="hidden" name="returnPrice" value= "'.$price.'" > ';
                       echo '<input type="hidden" name="returnClass" value= '.$Class.' > ';
-                      echo '<input type="radio" name="returnRadio" value ="'.$row["Flight_no"].'">';
+                      echo '<input type="radio" name="returnRadio" value ="'.$row["Flight_no"].'" required>';
                       // echo '</form>';
                       echo "</td>";
                       echo "</tr>";
@@ -156,11 +156,16 @@ $result->free();
         echo "</table>";
         $result->free();
       ?>
-        <input type="submit" name="submit" value="submit">
+    </div>
+    <div class="col-sm" style="margin-top: 30px;">
+      <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+        <!-- <input type="submit" name="submit" value="submit"> -->
+    </div>
+
       </form>
-     </div>
    </div>
 </div>
 <?php
 }
+include('templates/footer.php');
 ?>
