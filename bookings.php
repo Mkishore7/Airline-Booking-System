@@ -57,7 +57,7 @@
             die("Connection failed: " . mysqli_connect_error());
           }
 
-            $query = "SELECT * FROM ticket WHERE Booking_Status='1'";
+            $query = "SELECT * FROM ticket WHERE Booking_Status='1' order by Date_of_departure desc";
             $data = mysqli_query($dbc, $query);
             if(mysqli_num_rows($data) != 0){
           ?>
@@ -65,6 +65,8 @@
             <?php
               $curr = 1;
               while($row = mysqli_fetch_array($data)){
+                if(date("Y-m-d")>$row['Date_of_departure'])
+                {
                 echo '<tr><th scope="row">' . $curr . '</th>' .
                           '<td>' . $row["User_ID"] . '</td>' .
                           '<td>' . $row["PassengerName"] . '</td>' .
@@ -74,8 +76,22 @@
                           '<td>' . $row["DepartureTime"] . '</td>' .
                           '<td>' . $row["Date_of_departure"] . '</td>' .
                           '<td><form action="' . $_SERVER['PHP_SELF'] . '?Ticket_ID=' . $row["Ticket_ID"] . '&tab=1" method="post">' .
-                          '<button type="reject" class="btn btn-outline-danger" name="reject">Cancel</button></form></td>' .
+                          '<button type="reject" class="btn btn-outline-danger" name="reject" disabled>Cancel</button></form></td>' .
                       '</tr>';
+                    }
+                    else {
+                        echo '<tr><th scope="row">' . $curr . '</th>' .
+                                  '<td>' . $row["User_ID"] . '</td>' .
+                                  '<td>' . $row["PassengerName"] . '</td>' .
+                                  '<td>' . $row["Src"] . '-' . $row["Dst"] .'</td>' .
+                                  '<td>' . $row["Flight_no"] . '</td>' .
+                                  '<td>' . $row["ArrivalTime"] . '</td>' .
+                                  '<td>' . $row["DepartureTime"] . '</td>' .
+                                  '<td>' . $row["Date_of_departure"] . '</td>' .
+                                  '<td><form action="' . $_SERVER['PHP_SELF'] . '?Ticket_ID=' . $row["Ticket_ID"] . '&tab=1" method="post">' .
+                                  '<button type="reject" class="btn btn-outline-danger" name="reject">Cancel</button></form></td>' .
+                              '</tr>';
+                    }
                 $curr = $curr + 1;
               }
             ?>
